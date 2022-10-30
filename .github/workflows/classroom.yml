@@ -16,12 +16,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Build project
-        uses: eskatos/gradle-command-action@v1
-        with:
-          dependencies-cache-enabled: true
-          arguments: clean build
-
       - name: Deploy project
         uses: akhileshns/heroku-deploy@v3.4.6
         with:
