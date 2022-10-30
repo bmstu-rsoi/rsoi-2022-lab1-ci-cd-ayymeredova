@@ -53,7 +53,7 @@ def get_all_persons():
                     name = data["name"],
                     address = data["address"],
                     work = data["work"],
-                    age = age["age"],
+                    age = data["age"],
                 )
             
         except ValidationError as error:
@@ -61,11 +61,14 @@ def get_all_persons():
     
         try:
             db.session.add(new_person)
-            return make_data_response(200, message ="Success!")
+            db.session.commit()
+            make_data_response(200, message="Success!")
         except:
             db.session.rollback()
             make_data_response(500, message="Database add error!")
-        return make_data_response(jsonify(person), 200)
+       
+
+        return make_data_response(jsonify(new_person), 200)
 
 
 @app.route('/api/v1/persons/<int:person_id>', methods = ['GET'])
