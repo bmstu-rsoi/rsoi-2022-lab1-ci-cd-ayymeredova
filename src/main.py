@@ -47,7 +47,7 @@ def get_all_persons():
             abort(404)
         return make_response(jsonify(result), 200)
     
-    elif request.method == "POST":
+    if request.method == "POST":
         try:
             if request.is_json:
                 data = request.get_json()
@@ -69,9 +69,10 @@ def get_all_persons():
         except:
             db.session.rollback()
             make_data_response(500, message="Database add error!")
-       
-    return make_empty(201)
-        
+
+    response = make_empty(201)
+    response.headers["Location"] = f"/api/v1/persons/{new_person.id}"
+    return response
 
 
 @app.route('/api/v1/persons/<int:person_id>', methods = ['GET'])
