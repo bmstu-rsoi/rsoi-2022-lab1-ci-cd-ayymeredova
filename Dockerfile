@@ -5,9 +5,10 @@ ENV PORT=8080
 
 COPY . /app
 WORKDIR /app
+ENV set FLASK_APP=main.py
 RUN pip install -r requirements.txt
 ENTRYPOINT ["python"]
-RUN chmod 644 app.py
-CMD ["app.py"]
+
+CMD ["flask", "run"]
 
 
