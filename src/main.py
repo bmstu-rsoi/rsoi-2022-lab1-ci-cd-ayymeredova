@@ -108,7 +108,6 @@ def delete_one_person(person_id):
         
         try:
             args = request.json
-            print(args)
         except ValidationError as error:
             return make_data_response(400, message="Bad JSON format")
         
@@ -116,12 +115,11 @@ def delete_one_person(person_id):
 
         for key in args:
             if args[key] is not None:
-                print(key, args[key])
                 setattr(person, key, args[key])
         
         try:
             db.session.commit()
-            return make_data_response(200, message="Successfulle updated person with id = {}".format(person_id))
+            return make_response(jsonify(person), 200)
         except exc.SQLAlchemyError:
             db.session.rollback()
             return make_data_response(500, message = "Database commit error!")
