@@ -1,5 +1,6 @@
 from email import message
-import os
+import os 
+import sys
 from marshmallow import ValidationError
 import psycopg2
 from flask import Flask, request, flash, redirect
@@ -124,10 +125,15 @@ def delete_one_person(person_id):
 
     return make_empty(201)
 
-
+port = 8080
+herokuPort = os.environ.get('PORT')
+if herokuPort != None:
+    port = herokuPort
+if len(sys.argv) > 1:
+    port = int(sys.argv[1])
 
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=port)
 
 
 
