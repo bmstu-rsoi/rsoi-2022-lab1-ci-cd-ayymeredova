@@ -108,6 +108,7 @@ def delete_one_person(person_id):
         
         try:
             args = request.json
+            print(args)
         except ValidationError as error:
             return make_data_response(400, message="Bad JSON format")
         
@@ -115,8 +116,9 @@ def delete_one_person(person_id):
 
         for key in args:
             if args[key] is not None:
+                print(key, args[key])
                 setattr(person, key, args[key])
-
+        
         try:
             db.session.commit()
             return make_data_response(200, message="Successfulle updated person with id = {}".format(person_id))
@@ -135,7 +137,7 @@ if len(sys.argv) > 1:
     port = int(sys.argv[1])
 
 if __name__=="__main__":
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True)
 
 
 
