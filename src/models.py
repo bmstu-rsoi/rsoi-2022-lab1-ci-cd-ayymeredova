@@ -1,4 +1,4 @@
-from multiprocessing.reduction import steal_handle
+# from multiprocessing.reduction import steal_handle
 from re import S
 import string
 from flask_marshmallow import Marshmallow
