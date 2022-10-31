@@ -64,11 +64,11 @@ def get_all_persons():
         try:
             db.session.add(new_person)
             db.session.commit()
-            return make_data_response(200, message="Successfully added new person: name: {}, address: {}, work: {}, age: {} ".format(new_person.name, 
-            new_person.address, new_person.work, new_person.age))
+            # return make_data_response(200, message="Successfully added new person: name: {}, address: {}, work: {}, age: {} ".format(new_person.name, 
+            # new_person.address, new_person.work, new_person.age))
         except:
             db.session.rollback()
-            make_data_response(500, message="Database add error!")
+            return make_data_response(500, message="Database add error!")
 
     response = make_empty(201)
     response.headers["Location"] = f"/api/v1/persons/{new_person.id}"
@@ -96,7 +96,8 @@ def delete_one_person(person_id):
         try:
             db.session.delete(person)
             db.session.commit()
-            return make_data_response(200, message= "Successfully deleted person with id = {}".format(person_id))
+            return make_empty(204)
+            # return make_data_response(200, message= "Successfully deleted person with id = {}".format(person_id))
         except exc.SQLAlchemyError:
             db.session.rollback()
             return make_data_response(500, message= "Database delete error")
